@@ -4,14 +4,33 @@
       <div class="avatarBox">
         <img src="../assets/img/avatar.jpg" />
       </div>
-      <el-form label-width="80px">
-        <el-form-item label="活动名称">
-          <el-input></el-input>
+      <el-form label-width="60px" :model="formdata" class="loginForm">
+        <el-form-item label="用户名">
+          <el-input v-model="formdata.username" prefix-icon="el-icon-user"></el-input>
+        </el-form-item>
+        <el-form-item label="密 码">
+          <el-input v-model="formdata.password" prefix-icon="el-icon-lock"></el-input>
+        </el-form-item>
+        <el-form-item class="buttonBox">
+          <el-button type="success">登录</el-button>
+          <el-button type="info">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data(){
+    return{
+      formdata:{
+        username:'asdfdsa',
+        password:'asdfasdf',
+      }
+    };
+  }
+};
+</script>
 <style scoped>
 .login {
   background-color: cadetblue;
@@ -19,7 +38,7 @@
 }
 .loginBox {
   width: 450px;
-  height: 350px;
+  height: 310px;
   background-color: white;
   top: 50%;
   left: 50%;
@@ -43,5 +62,16 @@
   height: 60px;
   border: 1px solid #eee;
   border-radius: 50%;
+}
+.buttonBox{
+  display: flex;
+  /* justify-content: end; */
+}
+.loginForm{
+  position: absolute;
+  width: 100%;
+  padding: 0 20px;
+  bottom: 30px;
+  box-sizing: border-box;
 }
 </style>
