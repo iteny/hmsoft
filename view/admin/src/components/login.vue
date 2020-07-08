@@ -4,16 +4,16 @@
       <div class="avatarBox">
         <img src="../assets/img/avatar.jpg" />
       </div>
-      <el-form label-width="60px" :model="formdata" class="loginForm">
-        <el-form-item label="用户名">
-          <el-input v-model="formdata.username" prefix-icon="el-icon-user"></el-input>
+      <el-form ref="loginFormRef" label-width="70px" :model="formdata" :rules="rules" class="loginForm">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="formdata.username" placeholder="请输入您的用户名" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
-        <el-form-item label="密 码">
-          <el-input v-model="formdata.password" prefix-icon="el-icon-lock"></el-input>
+        <el-form-item label="密 码" prop="password">
+          <el-input v-model="formdata.password" placeholder="请输入您的密码" prefix-icon="el-icon-lock" type="password"></el-input>
         </el-form-item>
         <el-form-item class="buttonBox">
-          <el-button type="success">登录</el-button>
-          <el-button type="info">重置</el-button>
+          <el-button type="success" @click="loginButton()">登录</el-button>
+          <el-button type="info" @click="resetButton()">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,14 +21,34 @@
 </template>
 <script>
 export default {
-  data(){
-    return{
-      formdata:{
-        username:'asdfdsa',
-        password:'asdfasdf',
+  data() {
+    return {
+      formdata: {
+        username: "",
+        password: ""
+      },
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" }, //trigger鼠标失去焦点触发事件
+          { min: 5, max: 11, message: "长度在 5 到 11 个字符", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" }, //trigger鼠标失去焦点触发事件
+          { min: 5, max: 11, message: "长度在 5 到 11 个字符", trigger: "blur" }
+        ]
       }
     };
-  }
+  },
+  methods: {
+    resetButton(){
+      this.$refs.loginFormRef.resetFields();
+    },
+    loginButton(){
+      this.$refs.loginFormRef.validate(valid=>{
+        console.log(valid);
+      });
+    }
+  },
 };
 </script>
 <style scoped>
@@ -54,7 +74,7 @@ export default {
   padding: 5px;
   box-shadow: 0 0 10px #ddd;
   position: absolute;
-  transform: translate(-25%, -15%);
+  transform: translate(-15%, -15%);
   background-color: #fff;
 }
 .avatarBox img {
@@ -63,11 +83,11 @@ export default {
   border: 1px solid #eee;
   border-radius: 50%;
 }
-.buttonBox{
+.buttonBox {
   display: flex;
   /* justify-content: end; */
 }
-.loginForm{
+.loginForm {
   position: absolute;
   width: 100%;
   padding: 0 20px;
