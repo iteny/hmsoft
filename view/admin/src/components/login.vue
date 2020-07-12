@@ -4,16 +4,21 @@
       <div class="avatarBox">
         <img src="../assets/img/avatar.jpg" />
       </div>
-      <el-form ref="loginFormRef" label-width="70px" :model="formdata" :rules="rules" class="loginForm">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="formdata.username" placeholder="请输入您的用户名" prefix-icon="el-icon-user"></el-input>
+      <el-form ref="loginFormRef" :model="formdata" :rules="rules" class="loginForm">
+        <el-form-item prop="username">
+          <el-input v-model="formdata.username" placeholder="请输入您的用户名" suffix-icon="el-icon-user"></el-input>
         </el-form-item>
-        <el-form-item label="密 码" prop="password">
-          <el-input v-model="formdata.password" placeholder="请输入您的密码" prefix-icon="el-icon-lock" type="password"></el-input>
+        <el-form-item prop="password">
+          <el-input
+            v-model="formdata.password"
+            placeholder="请输入您的密码"
+            suffix-icon="el-icon-lock"
+            type="password"
+          ></el-input>
         </el-form-item>
         <el-form-item class="buttonBox">
-          <el-button type="success" @click="loginButton()">登录</el-button>
-          <el-button type="info" @click="resetButton()">重置</el-button>
+          <el-button type="success" @click="loginButton()" style="width:48%">登录</el-button>
+          <el-button type="info" @click="resetButton()" style="width:48%">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -40,26 +45,39 @@ export default {
     };
   },
   methods: {
-    resetButton(){
+    resetButton() {
       this.$refs.loginFormRef.resetFields();
     },
-    loginButton(){
-      this.$refs.loginFormRef.validate(valid=>{
+    loginButton() {
+      this.$refs.loginFormRef.validate(valid => {
         console.log(valid);
       });
     }
-  },
+  }
 };
 </script>
 <style scoped>
 .login {
-  background-color: cadetblue;
+  background: #000000;
+  background: -moz-linear-gradient(top, #000000 0%, #ffffff 100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #000000),
+    color-stop(100%, #ffffff)
+  );
+  background: -webkit-linear-gradient(top, #000000 0%, #ffffff 100%);
+  background: -o-linear-gradient(top, #000000 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #000000 0%, #ffffff 100%);
+  background: linear-gradient(to bottom, #000000 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#ffffff',GradientType=0 );
   height: 100%;
 }
 .loginBox {
-  width: 450px;
+  width: 360px;
   height: 310px;
-  background-color: white;
+  /* background-color: white; */
   top: 50%;
   left: 50%;
   position: absolute;
@@ -74,7 +92,7 @@ export default {
   padding: 5px;
   box-shadow: 0 0 10px #ddd;
   position: absolute;
-  transform: translate(-15%, -15%);
+  transform: translate(200%, -15%);
   background-color: #fff;
 }
 .avatarBox img {
@@ -84,7 +102,7 @@ export default {
   border-radius: 50%;
 }
 .buttonBox {
-  display: flex;
+  /* display: flex; */
   /* justify-content: end; */
 }
 .loginForm {
