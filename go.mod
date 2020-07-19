@@ -1,4 +1,4 @@
-module gin
+module hmsoft
 
 go 1.14
 

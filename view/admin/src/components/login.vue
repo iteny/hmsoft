@@ -49,8 +49,12 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     loginButton() {
-      this.$refs.loginFormRef.validate(valid => {
-        console.log(valid);
+      this.$refs.loginFormRef.validate(async valid => {
+        if (!valid) return;
+        const res = await this.$http.get("/api/login", {
+          params: this.formdata
+        });
+        console.log(res.data);
       });
     }
   }
