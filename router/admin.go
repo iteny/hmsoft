@@ -16,7 +16,25 @@ import "github.com/gin-gonic/gin"
 // 	// r.PUT()
 // 	return r
 // }
-func LoadShop(e *gin.Engine) {
+func AdminRouter(e *gin.Engine) {
+	v1 := e.Group("/admin")
+	{
+		v1.GET("/login", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "login nima",
+			})
+		})
+		v1.GET("/submit", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "ping",
+			})
+		})
+		v1.GET("/read", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "ping",
+			})
+		})
+	}
 	e.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "ping",

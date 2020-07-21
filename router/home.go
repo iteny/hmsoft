@@ -16,7 +16,7 @@ import "github.com/gin-gonic/gin"
 // 	// r.PUT()
 // 	return r
 // }
-func LoadBlog(e *gin.Engine) {
+func HomeRouter(e *gin.Engine) {
 	e.GET("/post", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "post",
