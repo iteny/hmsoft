@@ -1,6 +1,10 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 //后台管理路由
 // func AdminRouter() *gin.Engine {
@@ -19,12 +23,25 @@ import "github.com/gin-gonic/gin"
 func AdminRouter(e *gin.Engine) {
 	v1 := e.Group("/admin")
 	{
-		v1.GET("/login", func(c *gin.Context) {
+		v1.POST("/login", func(c *gin.Context) {
+			username := c.PostForm("username")
+			// password := c.DefaultPostForm("nick", "password") // 此方法可以设置默认值
+			fmt.Println(username + "1111")
 			c.JSON(200, gin.H{
-				"message": "login nima",
+				// "status":   "posted",
+				"username": username + "sadf",
+				// "password": password,
 			})
+			// data, _ := ioutil.ReadAll(c.Request.Body)
+			// fmt.Printf("ctx.Request.body: %v", string(data))
+			// c.Request.ParseForm()
+			// for k, v := range c.Request.PostForm {
+			// 	fmt.Println("asdk:%v\n", k)
+			// 	fmt.Println("asdfasv:%v\n", v)
+			// }
+			// fmt.Println("sdfasd")
 		})
-		v1.GET("/submit", func(c *gin.Context) {
+		v1.POST("/submit", func(c *gin.Context) {
 			c.JSON(200, gin.H{
 				"message": "ping",
 			})
@@ -35,9 +52,14 @@ func AdminRouter(e *gin.Engine) {
 			})
 		})
 	}
-	e.GET("/ping", func(c *gin.Context) {
+	e.POST("/ping", func(c *gin.Context) {
+		username := c.PostForm("username")
+		// password := c.DefaultPostForm("nick", "password") // 此方法可以设置默认值
+		fmt.Println(username + "1111")
 		c.JSON(200, gin.H{
-			"message": "ping",
+			// "status":   "posted",
+			"username": username + "sadf",
+			// "password": password,
 		})
 	})
 	e.GET("/good", func(c *gin.Context) {

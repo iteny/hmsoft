@@ -51,8 +51,9 @@ export default {
     loginButton() {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return;
-        const res = await this.$http.get("/api/admin/login", {
-          params: this.formdata
+        const res = await this.$http.post("/admin/login", {
+          username: this.formdata.username,
+          password: this.formdata.password
         });
         console.log(res.data);
       });

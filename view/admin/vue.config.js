@@ -28,16 +28,17 @@ module.exports = {
   devServer: {
     open: true,
     host: 'localhost',
-    port: '8081',
+    port: '8080',
     proxy: {
-      '/api': {
+      '': {
         target: 'http://localhost:9090', // 要请求的地址
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^': ''
         }
       }
     }
   }
+
 };
