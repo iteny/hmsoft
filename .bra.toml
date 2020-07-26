@@ -7,7 +7,8 @@ init_cmds = [                      # Commands run in start
 watch_all = true                   # Watch all sub-directories
 watch_dirs = [
   "$WORKDIR",
-]                                  
+  "$WORKDIR/ctrl/admin",
+]
 watch_exts = [".go"]               # Extensions to watch
 env_files = []                     # Load env vars from files
 ignore = [".git", "node_modules"]  # Directories to exclude from watching
