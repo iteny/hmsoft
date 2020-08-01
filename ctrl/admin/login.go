@@ -2,12 +2,15 @@ package admin
 
 import (
 	"fmt"
+	"hmsoft/common"
+	"hmsoft/sql"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type LoginCtrl struct {
+	common.BaseFunc
 }
 type Login struct {
 	Username string `form:"username" json:"username" xml:"username" binding:"required"`
@@ -17,7 +20,7 @@ type Login struct {
 func LoginCtrlObject() *LoginCtrl {
 	return &LoginCtrl{}
 }
-func (t *LoginCtrl) LoginSubmit(c *gin.Context) {
+func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 	// username := c.PostForm("username")
 	// // password := c.DefaultPostForm("nick", "password") // 此方法可以设置默认值
 	// fmt.Println(username + "1111")
@@ -29,6 +32,16 @@ func (t *LoginCtrl) LoginSubmit(c *gin.Context) {
 	var data Login
 	//结构体只和查询参数绑定
 	if err := c.ShouldBind(&data); err == nil {
+		var ss sql.User
+		// ss := sql.User{Username: data.Username, Password: data.Password}
+		// fmt.Println(user)
+		common.DB.Table("user").First(&ss)
+		fmt.Println(&ss)
+		// if e.Error != nil {
+		// 	fmt.Println(e.Error)
+		// }
+		// var ss sql.User
+		// b.Sql().First(&ss, 1)
 		fmt.Println(data.Username)
 		fmt.Println(data.Password)
 		c.JSON(http.StatusOK, gin.H{"res": "success"})

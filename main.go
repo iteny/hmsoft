@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"hmsoft/common"
 	"hmsoft/router"
 	"log"
 	"net/http"
@@ -20,6 +21,7 @@ func main() {
 	// })
 	// r := router.AdminRouter()
 	// r =router.HomeRouter()
+	common.Sql()
 	r := gin.Default()
 	// r.Use(Cors())
 	router.AdminRouter(r)
