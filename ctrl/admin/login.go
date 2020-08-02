@@ -32,14 +32,19 @@ func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 	var data Login
 	//结构体只和查询参数绑定
 	if err := c.ShouldBind(&data); err == nil {
-		var ss sql.User
-		// ss := sql.User{Username: data.Username, Password: data.Password}
+		// var ss sql.User
+		ss := sql.User{Username: data.Username, Password: b.Sha1PlusMd5(data.Password)}
 		// fmt.Println(user)
-		common.DB.Table("user").First(&ss)
-		fmt.Println(&ss)
-		// if e.Error != nil {
-		// 	fmt.Println(e.Error)
-		// }
+		db := b.Sql()
+		e := db.Where(&ss).First(&ss)
+		defer db.Close()
+		// fmt.Println(&ss)
+		if e.Error != nil {
+			fmt.Println(e.Error)
+		} else {
+			fmt.Println(ss.Id)
+			fmt.Println(c.ClientIP())
+		}
 		// var ss sql.User
 		// b.Sql().First(&ss, 1)
 		fmt.Println(data.Username)
