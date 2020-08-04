@@ -10,6 +10,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,6 +26,8 @@ func main() {
 	common.Sql()
 	r := gin.Default()
 	// r.Use(Cors())
+	store := cookie.NewStore([]byte("secret"))
+	r.Use(sessions.Sessions("mysession", store))
 	router.AdminRouter(r)
 	router.HomeRouter(r)
 
