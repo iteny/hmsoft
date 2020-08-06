@@ -30,18 +30,28 @@ export default {
     return {
       formdata: {
         username: "",
-        password: ""
+        password: "",
       },
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" }, //trigger鼠标失去焦点触发事件
-          { min: 5, max: 11, message: "长度在 5 到 11 个字符", trigger: "blur" }
+          {
+            min: 5,
+            max: 11,
+            message: "长度在 5 到 11 个字符",
+            trigger: "blur",
+          },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" }, //trigger鼠标失去焦点触发事件
-          { min: 5, max: 11, message: "长度在 5 到 11 个字符", trigger: "blur" }
-        ]
-      }
+          {
+            min: 5,
+            max: 11,
+            message: "长度在 5 到 11 个字符",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -49,16 +59,21 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     loginButton() {
-      this.$refs.loginFormRef.validate(async valid => {
+      this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
         const res = await this.$http.post("/admin/login", {
           username: this.formdata.username,
-          password: this.formdata.password
+          password: this.formdata.password,
         });
-        console.log(res.data);
+        if (res.data.status == "success") {
+          this.$message.success("登录成功！");
+          this.$router.push("home");
+        } else if (res.data.status == "faild") {
+          this.$message.error("登录失败！" + res.data.info);
+        }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

@@ -42,6 +42,7 @@ func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 		defer db.Close()
 		// fmt.Println(&ss)
 		if e.Error != nil {
+			c.JSON(200, gin.H{"status": "faild", "info": e.Error.Error()})
 			fmt.Println(e.Error)
 		} else {
 			if userStruct.Id != 0 {
