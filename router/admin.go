@@ -18,11 +18,7 @@ func AdminRouter(e *gin.Engine) {
 				"message": "ping",
 			})
 		})
-		v1.GET("/read", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "ping",
-			})
-		})
+		v1.POST("/loginstatus", login.LoginStatus) //用户登录状态验证
 	}
 	e.POST("/ping", func(c *gin.Context) {
 		username := c.PostForm("username")

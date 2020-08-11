@@ -22,15 +22,9 @@ type Login struct {
 func LoginCtrlObject() *LoginCtrl {
 	return &LoginCtrl{}
 }
+
+//用户登录
 func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
-	// username := c.PostForm("username")
-	// // password := c.DefaultPostForm("nick", "password") // 此方法可以设置默认值
-	// fmt.Println(username + "1111")
-	// c.JSON(200, gin.H{
-	// 	// "status":   "posted",
-	// 	"username": username + "sadf",
-	// 	// "password": password,
-	// })
 	var data Login
 	//结构体只和查询参数绑定
 	if err := c.ShouldBind(&data); err == nil {
@@ -48,12 +42,11 @@ func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 			if userStruct.Id != 0 {
 				if userStruct.Status == 1 {
 					session := sessions.Default(c)
-
-					if session.Get("hello") != "world" {
-						session.Set("hello", "world")
+					if session.Get("uid") != userStruct.Id {
+						session.Set("uid", userStruct.Id)
+						session.Set("user", data.Username)
 						session.Save()
 					}
-					fmt.Println(session.Get("hello"))
 					tx := db.Begin()
 					loginLogStuct := sql.LoginLog{Username: data.Username, Time: time.Now().Unix(), Ip: c.ClientIP(), Useragent: c.GetHeader("User-Agent"), Uid: userStruct.Id}
 					if err := tx.Create(&loginLogStuct).Error; err != nil {
@@ -68,13 +61,19 @@ func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 				c.JSON(200, gin.H{"status": "faild"})
 			}
 		}
-		// var ss sql.User
-		// b.Sql().First(&ss, 1)
-		// fmt.Println(data.Username)
-		// fmt.Println(data.Password)
-		// c.JSON(http.StatusOK, gin.H{"res": "success"})
 	} else {
 		fmt.Println(err.Error())
 		c.JSON(http.StatusOK, gin.H{"res": err.Error()})
+	}
+}
+
+//登录的状态
+func (b *LoginCtrl) LoginStatus(c *gin.Context) {
+	session := sessions.Default(c)
+	fmt.Println(session.Get("uid"))
+	if session.Get("uid") != nil {
+		c.JSON(200, gin.H{"status": "success", "info": session.Get("user")})
+	} else {
+		c.JSON(200, gin.H{"status": "faild"})
 	}
 }

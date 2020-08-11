@@ -26,8 +26,8 @@ func main() {
 	common.Sql()
 	r := gin.Default()
 	// r.Use(Cors())
-	store := cookie.NewStore([]byte("secret"))
-	r.Use(sessions.Sessions("mysession", store))
+	store := cookie.NewStore([]byte("itenyrensheng"))
+	r.Use(sessions.Sessions("hema", store))
 	router.AdminRouter(r)
 	router.HomeRouter(r)
 

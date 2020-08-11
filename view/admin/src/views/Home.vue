@@ -29,10 +29,21 @@ export default {
     //   const res = await this.$http.get('/api/login', { params: this.loginObj })
     //   console.log(res.data)
     // }
+    async login() {
+      const res = await this.$http.post("/admin/loginstatus", {
+        // username: this.formdata.username,
+        // password: this.formdata.password,
+      });
+      if (res.data.status == "success") {
+        this.$message.success("您的用户名是" + res.data.info);
+      } else if (res.data.status == "faild") {
+        this.$message.error("您还未登录！");
+        this.$router.push("login");
+      }
+    },
   },
   created() {
     this.login();
   },
 };
-console.log("asdfsadf");
 </script>
