@@ -17,7 +17,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item class="buttonBox">
-          <el-button type="success" @click="loginButton()" style="width:48%">登录</el-button>
+          <el-button type="success" @click="loginButton()" style="width:48%" id="loginButton">登录</el-button>
           <el-button type="info" @click="resetButton()" style="width:48%">重置</el-button>
         </el-form-item>
       </el-form>
@@ -74,6 +74,13 @@ export default {
       });
     },
   },
+};
+// 回车登录
+document.onkeydown = function (e) {
+  var ev = document.all ? window.event : e;
+  if (ev.keyCode == 13) {
+    document.getElementById("loginButton").click();
+  }
 };
 </script>
 <style scoped>

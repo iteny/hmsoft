@@ -6,15 +6,13 @@
           <img src="../assets/img/avatar.jpg" />
           <span>系统管理后台</span>
         </div>
-        <el-button type="success" @click="logout()" size="mini">退出按钮</el-button>
+        <el-button type="success" @click="loginout()" size="mini">退出按钮</el-button>
       </el-header>
       <el-container>
         <el-aside width="200px">
           <el-menu
             default-active="2"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
@@ -37,7 +35,7 @@
                   <span>二级菜单</span>
                 </template>
 
-                <!-- <el-menu-item index="1-4-1">选项1</el-menu-item> -->
+                <el-menu-item index="1-4-1">选项1</el-menu-item>
               </el-submenu>
             </el-submenu>
           </el-menu>
@@ -55,10 +53,10 @@
 export default {
   data() {
     return {
-      loginObj: {
-        username: "admindsaf",
-        password: "123456",
-      },
+      // loginObj: {
+      //   username: "admindsaf",
+      //   password: "123456",
+      // },
     };
   },
   name: "Home",
@@ -71,6 +69,11 @@ export default {
     //   const res = await this.$http.get('/api/login', { params: this.loginObj })
     //   console.log(res.data)
     // }
+    async loginout() {
+      const res = await this.$http.post("/admin/loginout", {});
+      this.$message.success("退出成功！");
+      this.$router.push("login");
+    },
     async login() {
       const res = await this.$http.post("/admin/loginstatus", {
         // username: this.formdata.username,

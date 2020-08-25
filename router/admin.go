@@ -19,6 +19,7 @@ func AdminRouter(e *gin.Engine) {
 			})
 		})
 		v1.POST("/loginstatus", login.LoginStatus) //用户登录状态验证
+		v1.POST("/loginout", login.LoginOut)       //退出登录
 	}
 	e.POST("/ping", func(c *gin.Context) {
 		username := c.PostForm("username")

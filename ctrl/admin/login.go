@@ -70,10 +70,18 @@ func (b *LoginCtrl) LoginSubmit(c *gin.Context) {
 //登录的状态
 func (b *LoginCtrl) LoginStatus(c *gin.Context) {
 	session := sessions.Default(c)
-	fmt.Println(session.Get("uid"))
+	// fmt.Println(session.Get("uid"))
 	if session.Get("uid") != nil {
 		c.JSON(200, gin.H{"status": "success", "info": session.Get("user")})
 	} else {
 		c.JSON(200, gin.H{"status": "faild"})
 	}
+}
+
+//退出登录
+func (b *LoginCtrl) LoginOut(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Set("uid", nil)
+	session.Set("user", nil)
+	session.Save()
 }
