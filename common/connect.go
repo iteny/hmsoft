@@ -12,6 +12,10 @@ type BaseFunc struct {
 var DB *gorm.DB
 
 func Sql() *gorm.DB {
+	DB, err := gorm.Open("mysql", "root:iteny@/hmsoft?charset=utf8&parseTime=True&loc=Local")
+	if err != nil {
+		panic("failed to connect database")
+	}
 	return DB
 }
 

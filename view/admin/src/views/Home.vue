@@ -18,24 +18,24 @@
             active-text-color="#ffd04b"
           >
             <!-- 一级菜单 -->
-            <el-submenu index="1">
+            <el-submenu index="item.id+''" v-for="item in menulist" :key="item.id">
               <!-- 一级菜单模板 -->
               <template slot="title">
                 <!-- 菜单图标 -->
                 <i class="el-icon-location"></i>
                 <!-- 文本 -->
-                <span>导航一</span>
+                <span>{{item.name}}</span>
               </template>
               <!-- 一级菜单下二级菜单 -->
-              <el-submenu index="1-4">
+              <el-submenu index="subitem.id+''" v-for="subitem in item.children" :key="subitem.id">
                 <template slot="title">
                   <!-- 菜单图标 -->
                   <i class="el-icon-location"></i>
                   <!-- 文本 -->
-                  <span>二级菜单</span>
+                  <span>{{subitem.name}}</span>
                 </template>
 
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
+                <!-- <el-menu-item index="1-4-1">选项1</el-menu-item> -->
               </el-submenu>
             </el-submenu>
           </el-menu>
@@ -53,10 +53,7 @@
 export default {
   data() {
     return {
-      // loginObj: {
-      //   username: "admindsaf",
-      //   password: "123456",
-      // },
+      menulist: [],
     };
   },
   name: "Home",
@@ -74,6 +71,11 @@ export default {
       this.$message.success("退出成功！");
       this.$router.push("login");
     },
+    async getmenu() {
+      const res = await this.$http.post("/admin/getmenu", {});
+      console.info(res.data);
+      this.menulist = res.data.data;
+    },
     async login() {
       const res = await this.$http.post("/admin/loginstatus", {
         // username: this.formdata.username,
@@ -89,6 +91,7 @@ export default {
   },
   created() {
     this.login();
+    this.getmenu();
   },
 };
 </script>

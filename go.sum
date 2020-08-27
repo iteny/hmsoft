@@ -40,6 +40,8 @@ github.com/gorilla/securecookie v1.1.1/go.mod h1:ra0sb63/xPlUeL+yeDciTfxMRAA+MP+
 github.com/gorilla/sessions v1.1.1/go.mod h1:8KCfur6+4Mqcc6S0FEfKuN15Vl5MgXW92AE8ovaJD0w=
 github.com/gorilla/sessions v1.1.3 h1:uXoZdcdA5XdXF3QzuSlheVRUvjl+1rKY7zBXL68L9RU=
 github.com/gorilla/sessions v1.1.3/go.mod h1:8KCfur6+4Mqcc6S0FEfKuN15Vl5MgXW92AE8ovaJD0w=
+github.com/iteny/hmgo v0.0.0-20180516105134-8a691eae6a23 h1:LDrnmjZYIMynT285qI6y6AIstSHewT5V0THqZn89fn4=
+github.com/iteny/hmgo v0.0.0-20180516105134-8a691eae6a23/go.mod h1:eVKYTd8GHw4AV/A4TjVgu+PEpFCG6iqvDaP3TbEjlJc=
 github.com/jinzhu/gorm v1.9.15 h1:OdR1qFvtXktlxk73XFYMiYn9ywzTwytqe4QkuMRqc38=
 github.com/jinzhu/gorm v1.9.15/go.mod h1:G3LB3wezTOWM2ITLzPxEXgSkOXAntiLHS7UdBefADcs=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
