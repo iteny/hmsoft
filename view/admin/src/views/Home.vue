@@ -6,19 +6,30 @@
           <img src="../assets/img/avatar.jpg" />
           <span>系统管理后台</span>
         </div>
+        <!-- <el-radio-group v-model="isCollapse" size="mini">
+          <el-radio-button :label="false">展开</el-radio-button>
+          <el-radio-button :label="true">收起</el-radio-button>
+        </el-radio-group>-->
         <el-button type="success" @click="loginout()" size="mini">退出按钮</el-button>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="auto">
+          <div class="toggleBtn" @click="toggleCollapse()">
+            <i :class="isCollapse?'el-icon-s-unfold':'el-icon-s-fold'"></i>
+          </div>
+          <!-- 左侧菜单区域 -->
           <el-menu
             default-active="2"
             class="el-menu-vertical-demo"
-            background-color="#545c64"
+            background-color="cornflowerblue"
             text-color="#fff"
             active-text-color="#ffd04b"
+            :unique-opened="true"
+            :collapse="isCollapse"
+            :collapse-transition="true"
           >
             <!-- 一级菜单 -->
-            <el-submenu index="item.id+''" v-for="item in menulist" :key="item.id">
+            <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
               <!-- 一级菜单模板 -->
               <template slot="title">
                 <!-- 菜单图标 -->
@@ -27,7 +38,7 @@
                 <span>{{item.name}}</span>
               </template>
               <!-- 一级菜单下二级菜单 -->
-              <el-submenu index="subitem.id+''" v-for="subitem in item.children" :key="subitem.id">
+              <el-submenu :index="subitem.id+''" v-for="subitem in item.children" :key="subitem.id">
                 <template slot="title">
                   <!-- 菜单图标 -->
                   <i class="el-icon-location"></i>
@@ -54,6 +65,7 @@ export default {
   data() {
     return {
       menulist: [],
+      isCollapse: false,
     };
   },
   name: "Home",
@@ -87,6 +99,9 @@ export default {
         this.$message.error("您还未登录！");
         this.$router.push("login");
       }
+    },
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
     },
   },
   created() {
@@ -122,9 +137,26 @@ export default {
 .el-aside {
   background: cornflowerblue;
   line-height: 200px;
+  text-align: left;
 }
 .el-main {
   background: darkgreen;
   line-height: 200px;
+}
+.el-menu {
+  border-right: none;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+.toggleBtn {
+  height: 24px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: burlywood;
 }
 </style>
