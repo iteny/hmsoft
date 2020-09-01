@@ -19,7 +19,6 @@
           </div>
           <!-- 左侧菜单区域 -->
           <el-menu
-            default-active="2"
             class="el-menu-vertical-demo"
             background-color="cornflowerblue"
             text-color="#fff"
@@ -28,7 +27,12 @@
             :router="true"
             :collapse="isCollapse"
             :collapse-transition="true"
+            :default-active="activePath"
           >
+            <el-menu-item index="/welcome" @click="saveMenuStatus('/welcome')">
+              <i class="el-icon-location"></i>
+              <span>首页</span>
+            </el-menu-item>
             <!-- 一级菜单 -->
             <el-submenu :index="item.id+''" v-for="item in menulist" :key="item.id">
               <!-- 一级菜单模板 -->
@@ -43,6 +47,7 @@
                 :index="subitem.path"
                 v-for="subitem in item.children"
                 :key="subitem.id"
+                @click="saveMenuStatus(subitem.path)"
               >
                 <template slot="title">
                   <!-- 菜单图标 -->
@@ -73,6 +78,7 @@ export default {
     return {
       menulist: [],
       isCollapse: false,
+      activePath: "",
     };
   },
   name: "Home",
@@ -108,12 +114,18 @@ export default {
       }
     },
     toggleCollapse() {
+      //折叠菜单或展开
       this.isCollapse = !this.isCollapse;
+    },
+    saveMenuStatus(activePath) {
+      //保存菜单的选中的状态
+      window.sessionStorage.setItem("activePath", activePath);
     },
   },
   created() {
-    this.login();
-    this.getmenu();
+    this.login(); //获取登录的状态
+    this.getmenu(); //获取菜单
+    this.activePath = window.sessionStorage.getItem("activePath"); //获取菜单选中的状态值
   },
 };
 </script>
@@ -148,7 +160,7 @@ export default {
 }
 .el-main {
   background: darkgreen;
-  line-height: 200px;
+  /* line-height: 200px; */
 }
 .el-menu {
   border-right: none;

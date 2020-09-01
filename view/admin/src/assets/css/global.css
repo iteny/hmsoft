@@ -3,3 +3,10 @@ html,body,#app{
     margin: 0px;
     padding: 0px;
 }
+.el-breadcrumb{
+    font-size: 12px;
+}
+.el-card{
+    margin-top: 15px;
+    box-shadow: 0 1px 1px #666;
+}

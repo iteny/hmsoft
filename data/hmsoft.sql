@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 28/08/2020 00:45:16
+ Date: 01/09/2020 22:42:43
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `hm_login_logs`  (
   `useragent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '浏览器信息',
   `uid` bigint NOT NULL COMMENT '登录用户ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hm_login_logs
@@ -67,6 +67,12 @@ INSERT INTO `hm_login_logs` VALUES (30, 'admin', 1598365003, '127.0.0.1', 'Mozil
 INSERT INTO `hm_login_logs` VALUES (31, 'admin', 1598365248, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', 1);
 INSERT INTO `hm_login_logs` VALUES (32, 'admin', 1598365304, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', 1);
 INSERT INTO `hm_login_logs` VALUES (33, 'admin', 1598537912, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (34, 'admin', 1598705302, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (35, 'admin', 1598796464, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (36, 'admin', 1598964271, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (37, 'admin', 1598967135, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (38, 'admin', 1598967998, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
+INSERT INTO `hm_login_logs` VALUES (39, 'admin', 1598968425, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36', 1);
 
 -- ----------------------------
 -- Table structure for hm_menus
@@ -82,7 +88,7 @@ CREATE TABLE `hm_menus`  (
   `isshow` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否显示',
   `level` tinyint(1) NOT NULL DEFAULT 1 COMMENT '菜单等级',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hm_menus
