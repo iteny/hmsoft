@@ -16,20 +16,6 @@ func HomeCtrlObject() *HomeCtrl {
 	return &HomeCtrl{}
 }
 
-type TreeList struct {
-	Id        int         `json:"id"`
-	Name      string      `json:"name"`
-	Pid       int         `json:"pid"`
-	Sort      int         `json:"sort"`
-	Path      string      `json:"path"`
-	Component string      `json:"component"`
-	Icon      string      `json:"icon"`
-	Children  []*TreeList `json:"children"`
-}
-type DataRes struct {
-	Data []*TreeList `json:"data"`
-}
-
 func (b *HomeCtrl) GetMenu(c *gin.Context) {
 	menu := []sql.Menu{}
 	// var menu sql.Menu

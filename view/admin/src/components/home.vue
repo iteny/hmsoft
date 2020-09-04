@@ -98,7 +98,6 @@ export default {
     },
     async getmenu() {
       const res = await this.$http.post("/admin/getmenu", {});
-      console.info(res.data);
       this.menulist = res.data.data;
     },
     async login() {
@@ -159,7 +158,7 @@ export default {
   text-align: left;
 }
 .el-main {
-  background: darkgreen;
+  background: #ccc;
   /* line-height: 200px; */
 }
 .el-menu {
@@ -179,3 +178,4 @@ export default {
   background-color: burlywood;
 }
 </style>
+
