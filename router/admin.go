@@ -20,10 +20,11 @@ func AdminRouter(e *gin.Engine) {
 				"message": "ping",
 			})
 		})
-		v1.POST("/loginstatus", login.LoginStatus) //用户登录状态验证
-		v1.POST("/loginout", login.LoginOut)       //退出登录
-		v1.POST("/getmenu", home.GetMenu)          //获取菜单
-		v1.POST("/menuList", site.GetMenu)         //获取菜单
+		v1.POST("/loginstatus", login.LoginStatus)          //用户登录状态验证
+		v1.POST("/loginout", login.LoginOut)                //退出登录
+		v1.POST("/getmenu", home.GetMenu)                   //获取菜单
+		v1.POST("/menuList", site.GetMenu)                  //获取菜单
+		v1.POST("/changeMenuIsshow", site.ChangeMenuIsshow) //修改是否显示
 	}
 	e.POST("/ping", func(c *gin.Context) {
 		username := c.PostForm("username")
