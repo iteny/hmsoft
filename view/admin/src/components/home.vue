@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-container>
+    <el-container style="height:100%">
       <el-header>
         <div>
           <img src="../assets/img/avatar.jpg" />
@@ -13,7 +13,7 @@
         <el-button type="success" @click="loginout()" size="mini">退出按钮</el-button>
       </el-header>
       <el-container>
-        <el-aside width="auto">
+        <el-aside width="auto" :style="defaultHeight">
           <div class="toggleBtn" @click="toggleCollapse()">
             <i :class="isCollapse?'el-icon-s-unfold':'el-icon-s-fold'"></i>
           </div>
@@ -61,7 +61,7 @@
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>
+        <el-main :style="defaultHeight">
           <router-view />
         </el-main>
       </el-container>
@@ -79,6 +79,9 @@ export default {
       menulist: [],
       isCollapse: false,
       activePath: "",
+      defaultHeight: {
+        height: "",
+      },
     };
   },
   name: "Home",
@@ -120,21 +123,31 @@ export default {
       //保存菜单的选中的状态
       window.sessionStorage.setItem("activePath", activePath);
     },
+    //定义方法，获取高度减去头尾
+    getHeight() {
+      this.defaultHeight.height = window.innerHeight - 60 + "px";
+    },
   },
   created() {
     this.login(); //获取登录的状态
     this.getmenu(); //获取菜单
     this.activePath = window.sessionStorage.getItem("activePath"); //获取菜单选中的状态值
+    window.addEventListener("resize", this.getHeight);
+    this.getHeight();
   },
 };
 </script>
 <style scoped>
+.el-menu-item i,
+.el-menu-item i {
+  color: #fff;
+}
 .el-container {
   height: 100%;
 }
 .el-header {
   background: chocolate;
-  line-height: 60px;
+  /* line-height: 60px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -154,12 +167,14 @@ export default {
 }
 .el-aside {
   background: cornflowerblue;
-  line-height: 200px;
+  /* line-height: 200px; */
   text-align: left;
+  /* height: 100%; */
 }
 .el-main {
   background: #ccc;
   /* line-height: 200px; */
+  /* height: 100%; */
 }
 .el-menu {
   border-right: none;
