@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"strconv"
+	"unsafe"
 )
 
 func (c *BaseFunc) Md5(s string) string {
@@ -38,4 +39,11 @@ func (c *BaseFunc) ConvertToInt(s string) int {
 func (c *BaseFunc) ConvertToString(s int) string {
 	str := strconv.Itoa(s)
 	return str
+}
+
+// 字符串转到成数组byte
+func (c *BaseFunc) Str2bytes(s string) []byte {
+	x := (*[2]uintptr)(unsafe.Pointer(&s)) // 获取s的起始地址开始后的两个 uintptr 指针
+	h := [3]uintptr{x[0], x[1], x[1]}      // 构造三个指针数组
+	return *(*[]byte)(unsafe.Pointer(&h))
 }

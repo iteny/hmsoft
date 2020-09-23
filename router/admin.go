@@ -25,6 +25,7 @@ func AdminRouter(e *gin.Engine) {
 		v1.POST("/getmenu", home.GetMenu)                   //获取菜单
 		v1.POST("/menuList", site.GetMenu)                  //获取菜单
 		v1.POST("/changeMenuIsshow", site.ChangeMenuIsshow) //修改是否显示
+		v1.POST("/sortMenu", site.SortMenu)                 //菜单排序
 	}
 	e.POST("/ping", func(c *gin.Context) {
 		username := c.PostForm("username")

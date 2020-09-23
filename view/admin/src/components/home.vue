@@ -62,7 +62,7 @@
           </el-menu>
         </el-aside>
         <el-main :style="defaultHeight">
-          <router-view />
+          <router-view v-if="isRouterAlive"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -74,6 +74,11 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
   data() {
     return {
       menulist: [],
@@ -82,6 +87,7 @@ export default {
       defaultHeight: {
         height: "",
       },
+      isRouterAlive: true,
     };
   },
   name: "Home",
@@ -94,6 +100,12 @@ export default {
     //   const res = await this.$http.get('/api/login', { params: this.loginObj })
     //   console.log(res.data)
     // }
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    },
     async loginout() {
       const res = await this.$http.post("/admin/loginout", {});
       this.$message.success("退出成功！");
@@ -139,7 +151,7 @@ export default {
 </script>
 <style scoped>
 .el-menu-item i,
-.el-menu-item i {
+.el-submenu__title i {
   color: #fff;
 }
 .el-container {

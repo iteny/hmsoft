@@ -18,13 +18,12 @@
         </el-col>
         <el-col :span="8">
           <div class="grid-content bg-purple">
-            <el-button type="primary" @click="rowClassName">主要按钮</el-button>
+            <!-- <el-button type="primary" @click="getElements">主要按钮</el-button> -->
           </div>
         </el-col>
       </el-row>
-      <el-form ref="form" label-width="80px" name="form">
+      <form action="/intendant/site/sortMenu" method="post" class="sortme">
         <el-table
-          :row-class-name="rowClassName"
           ref="tableme"
           v-loading="loading"
           :data="menuList"
@@ -40,11 +39,14 @@
               <i :class="scope.row.icon" style="font-size:18px"></i>
             </template>
           </el-table-column>
-          <el-table-column label="姓名" width="180">
+          <el-table-column align="center" label="排序" width="80">
             <template slot-scope="scope">
-              <el-form-item>
-                <el-input v-model="scope.row.sort" placeholder="请输入内容"></el-input>
-              </el-form-item>
+              <!-- <el-input v-model="scope.row.sort" placeholder="请输入内容"></el-input> -->
+              <input
+                :name="scope.row.id"
+                :value="scope.row.sort"
+                style="width:30px;text-align:center;border-radius:4px;border-color:#66b1ff"
+              />
             </template>
           </el-table-column>
           <el-table-column prop="address" label="地址"></el-table-column>
@@ -61,6 +63,10 @@
             </template>
           </el-table-column>
           <el-table-column align="right">
+            <template slot="header" slot-scope="scope">
+              <el-button type="primary" @click="ajaxsort">排序</el-button>
+              <el-button type="primary" @click="reloadlocal">刷新</el-button>
+            </template>
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
               <el-button
@@ -71,7 +77,7 @@
             </template>
           </el-table-column>
         </el-table>
-      </el-form>
+      </form>
     </el-card>
   </div>
 </template>
@@ -81,8 +87,10 @@ export default {
     return {
       menuList: [],
       loading: true,
+      sortList: [{}],
     };
   },
+  inject: ["reload"],
   methods: {
     async getMenuList() {
       const res = await this.$http.post("/admin/menuList", {});
@@ -102,14 +110,38 @@ export default {
         }
       }
     },
-    rowClassName(row, rowIndex) {
-      //把每一行的索bai引放进row
-      // row.index = rowIndex;
-      console.info(row["row"].sort);
+    async ajaxsort() {
+      var form = $("form.sortme");
+      var param = {};
+      var sorts = form.serializeArray();
+      $.each(sorts, function () {
+        if (param[this.name] !== undefined) {
+          if (!param[this.name].push) {
+            param[this.name] = [param[this.name]];
+          }
+          param[this.name].push(this.value || "");
+        } else {
+          param[this.name] = this.value || "";
+        }
+      });
+      var data = JSON.stringify(param);
+      const res = await this.$http.post("/admin/sortMenu", { data: data });
+      if (res.data.status == "success") {
+        this.$nextTick();
+        this.$message.success("排序成功！");
+      } else {
+        this.$message.error("排序失败！");
+      }
+    },
+    reloadlocal() {
+      this.reload();
     },
   },
   created() {
     this.getMenuList();
   },
+  // activated() {
+  //   this.getMenuList();
+  // },
 };
 </script>
