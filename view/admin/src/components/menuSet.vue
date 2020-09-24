@@ -22,21 +22,26 @@
           </div>
         </el-col>
       </el-row>
-      <form action="/intendant/site/sortMenu" method="post" class="sortme">
+      <form class="sortme">
         <el-table
           ref="tableme"
           v-loading="loading"
           :data="menuList"
-          style="width: 100%;margin-bottom: 20px;"
+          style="width: 100%; margin-bottom: 20px"
           row-key="id"
           border
           default-expand-all
-          :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+          :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         >
-          <el-table-column prop="name" label="菜单名称" sortable width="160"></el-table-column>
+          <el-table-column
+            prop="name"
+            label="菜单名称"
+            sortable
+            width="160"
+          ></el-table-column>
           <el-table-column align="center" label="图标" width="80">
             <template slot-scope="scope">
-              <i :class="scope.row.icon" style="font-size:18px"></i>
+              <i :class="scope.row.icon" style="font-size: 18px"></i>
             </template>
           </el-table-column>
           <el-table-column align="center" label="排序" width="80">
@@ -45,12 +50,22 @@
               <input
                 :name="scope.row.id"
                 :value="scope.row.sort"
-                style="width:30px;text-align:center;border-radius:4px;border-color:#66b1ff"
+                style="
+                  width: 30px;
+                  text-align: center;
+                  border-radius: 4px;
+                  border-color: #66b1ff;
+                "
               />
             </template>
           </el-table-column>
-          <el-table-column prop="address" label="地址"></el-table-column>
-          <el-table-column prop="isshow" label="是否显示" width="80" align="center">
+          <el-table-column prop="path" label="路径"></el-table-column>
+          <el-table-column
+            prop="isshow"
+            label="是否显示"
+            width="80"
+            align="center"
+          >
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.isshow"
@@ -58,27 +73,63 @@
                 :inactive-value="0"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
-                @change="changeSwitch($event,scope.row.id,scope.row.isshow)"
-              >></el-switch>
+                @change="changeSwitch($event, scope.row.id, scope.row.isshow)"
+                >></el-switch
+              >
             </template>
           </el-table-column>
           <el-table-column align="right">
             <template slot="header" slot-scope="scope">
-              <el-button type="primary" @click="ajaxsort">排序</el-button>
-              <el-button type="primary" @click="reloadlocal">刷新</el-button>
+              <el-button
+                icon="el-icon-add-location"
+                type="success"
+                @click="addTopMenuDialog = true"
+                >添加顶级菜单</el-button
+              >
+              <el-button
+                icon="el-icon-add-location"
+                type="success"
+                @click="ajaxsort"
+                >排序</el-button
+              >
+              <el-button
+                icon="el-icon-loading"
+                type="success"
+                @click="reloadlocal"
+                >刷新</el-button
+              >
             </template>
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
               <el-button
-                size="mini"
+                icon="el-icon-edit"
+                type="primary"
+                @click="handleEdit(scope.$index, scope.row)"
+                >编辑</el-button
+              >
+              <el-button
+                icon="el-icon-delete"
                 type="danger"
                 @click="handleDelete(scope.$index, scope.row)"
-              >Delete</el-button>
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
       </form>
     </el-card>
+    <el-dialog
+      title="添加顶级菜单"
+      :visible.sync="addTopMenuDialog"
+      width="50%"
+    >
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addTopMenuDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addTopMenuDialog = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -88,6 +139,7 @@ export default {
       menuList: [],
       loading: true,
       sortList: [{}],
+      addTopMenuDialog: false,
     };
   },
   inject: ["reload"],
@@ -127,7 +179,7 @@ export default {
       var data = JSON.stringify(param);
       const res = await this.$http.post("/admin/sortMenu", { data: data });
       if (res.data.status == "success") {
-        this.$nextTick();
+        this.reload();
         this.$message.success("排序成功！");
       } else {
         this.$message.error("排序失败！");

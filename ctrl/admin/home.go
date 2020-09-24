@@ -20,7 +20,7 @@ func (b *HomeCtrl) GetMenu(c *gin.Context) {
 	menu := []sql.Menu{}
 	// var menu sql.Menu
 	db := common.Sql()
-	db.Find(&menu)
+	db.Order("sort").Find(&menu)
 	defer db.Close()
 	ar := sql.RecursiveMenu(menu, 0, 0)
 	fmt.Println(ar)
