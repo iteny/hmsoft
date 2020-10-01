@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"hmsoft/common"
 	"hmsoft/sql"
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,12 @@ import (
 
 type SiteCtrl struct {
 	common.BaseFunc
+}
+type MenuValidationRule struct {
+	Name string `form:"name" json:"name" xml:"name" binding:"required"`
+	Path string `form:"path" json:"path" xml:"path" binding:"required"`
+	Icon string `form:"icon" json:"icon" xml:"icon" binding:"required"`
+	Pid  *int   `form:"pid" json:"pid" xml:"pid" binding:"required"`
 }
 
 func SiteCtrlObject() *SiteCtrl {
@@ -99,5 +106,27 @@ func (b *SiteCtrl) SortMenu(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "faild"})
 	} else {
 		c.JSON(200, gin.H{"status": "success"})
+	}
+}
+
+//添加菜单
+func (b *SiteCtrl) AddMenu(c *gin.Context) {
+	var data MenuValidationRule
+	//结构体只和查询参数绑定
+	if err := c.ShouldBind(&data); err == nil {
+		menu := sql.Menu{Name: data.Name, Path: data.Path, Icon: data.Icon, Pid: *data.Pid}
+		// user := User{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
+		db := b.Sql()
+		result := db.Create(&menu) // 通过数据的指针来创建
+		defer db.Close()
+		if result.RowsAffected == 0 {
+			c.JSON(200, gin.H{"status": "faild"})
+		} else {
+			c.JSON(200, gin.H{"status": "success"})
+		}
+
+	} else {
+		fmt.Println(err.Error())
+		c.JSON(http.StatusOK, gin.H{"res": err.Error()})
 	}
 }

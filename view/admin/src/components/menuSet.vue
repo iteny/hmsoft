@@ -75,19 +75,16 @@
                 <el-form-item label="名称" prop="name" :label-width="formLabelWidth" width="50%" align="left">
                     <el-input v-model="addForm.name" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="名称士大夫" prop="name" :label-width="formLabelWidth" width="50%" align="left">
-                    <el-input v-model="addForm.name" autocomplete="off"></el-input>
+                <el-form-item label="路径" prop="path" :label-width="formLabelWidth" width="50%" align="left">
+                    <el-input v-model="addForm.path" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="名称如果" prop="name" :label-width="formLabelWidth" width="50%" align="left">
-                    <el-input v-model="addForm.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="阿斯顿发生" prop="name" :label-width="formLabelWidth" width="50%" align="left">
-                    <el-input v-model="addForm.name" autocomplete="off"></el-input>
+                <el-form-item label="图标" prop="icon" :label-width="formLabelWidth" width="50%" align="left">
+                    <el-input v-model="addForm.icon" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addTopMenuDialog = false">取 消</el-button>
-                <el-button type="primary" @click="addTopMenuDialog = false">确 定</el-button>
+                <el-button type="primary" @click="addMenu">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -96,7 +93,7 @@
 export default {
     data() {
         var checkAge = (rule, value, callback) => {
-            const regEmail = "";
+            const regEmail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}/;
             if (regEmail.test(value)) {
                 callback() //合法邮箱
             } else {
@@ -110,7 +107,9 @@ export default {
             addTopMenuDialog: false,
             formLabelWidth: "120px",
             addForm: {
-                name: ""
+                name: "",
+                path: "",
+                icon: "",
             },
             addFormRules: {
                 name: [
@@ -121,6 +120,9 @@ export default {
                         message: "长度在 5 到 11 个字符",
                         trigger: "blur",
                     },
+                    // {
+                    //     validator: checkAge, trigger: "blur"
+                    // }
                 ],
             },
         };
@@ -173,6 +175,18 @@ export default {
         reloadlocal() {
             this.reload();
         },
+        addMenu() {
+            this.$refs.addFormRef.validate(async (valid) => {
+                if (valid) {
+                    const result = await this.$http.post('/admin/addMenu', {
+                        name: this.addForm.name,
+                        path: this.addForm.path,
+                        icon: this.addForm.icon,
+                        pid: '0',
+                    })
+                }
+            })
+        }
     },
     created() {
         this.getMenuList();
